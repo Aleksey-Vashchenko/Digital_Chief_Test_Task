@@ -30,7 +30,7 @@ public class User {
     Date birthDate;
     @Column(updatable = false)
     String passwordHash;
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @ToString.Exclude
     Set<Post> posts;
 

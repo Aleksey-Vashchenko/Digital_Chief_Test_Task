@@ -23,7 +23,7 @@ public class Post {
     @Column(updatable = false)
     Date creationDate;
     Date updateDate;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_uuid")
     User user;
 
