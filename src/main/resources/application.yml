@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: Digital_Chief_Test_Task
+  datasource:
+    url: jdbc:postgresql://${DB_SERVER}/${POSTGRES_DB}
+    password: ${POSTGRES_USER}
+    username: ${POSTGRES_PASSWORD}
+
+  jpa:
+    show-sql: true
+    database: postgresql
+    generate-ddl: true
+
