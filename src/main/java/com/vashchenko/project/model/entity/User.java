@@ -1,12 +1,14 @@
 package com.vashchenko.project.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import java.util.Date;
-import java.util.Objects;
-import java.util.Set;
-import java.util.UUID;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.*;
 
 @Entity
 @Getter
@@ -14,7 +16,11 @@ import java.util.UUID;
 @ToString
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class User {
+@Table(name = "accounts")
+@Builder
+@AllArgsConstructor
+public class User implements UserDetails {
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -30,10 +36,38 @@ public class User {
     Date birthDate;
     @Column(updatable = false)
     String passwordHash;
-    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    @ToString.Exclude
-    Set<Post> posts;
+    @OneToMany(mappedBy = "author", orphanRemoval = true, cascade = CascadeType.REMOVE)
+    @JsonIgnore
+    Set<Post> posts = new HashSet<>();
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority("Simple user"));
+    }
 
+    @Override
+    public String getPassword() {
+        return passwordHash;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 
     @Override
     public boolean equals(Object object) {

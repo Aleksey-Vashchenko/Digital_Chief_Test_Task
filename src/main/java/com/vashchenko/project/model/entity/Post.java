@@ -3,6 +3,7 @@ package com.vashchenko.project.model.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+
 import java.util.Date;
 import java.util.Objects;
 import java.util.UUID;
@@ -23,9 +24,9 @@ public class Post {
     @Column(updatable = false)
     Date creationDate;
     Date updateDate;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_uuid")
-    User user;
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id")
+    User author;
 
     @Override
     public boolean equals(Object object) {
