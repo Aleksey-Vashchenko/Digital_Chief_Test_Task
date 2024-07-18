@@ -1,3 +1,10 @@
+## Информация о сервере:
+1. Техническое задание [technical_task.txt](technical_task.txt)
+2. Коллекция запросов Postman [Digital Chief.postman_collection.json](Digital%20Chief.postman_collection.json)
+3. Используется самоподписанный HTTPS протокол 
+4. Сервер работает на 8443 порту
+
+
 # Инструкция по установке проекта с GitHub репозитория
 
 ## Шаг 1: Скачивание проекта с GitHub
@@ -43,10 +50,7 @@ export  SPRING_DATASOURCE_USERNAME='your_username'
 mvnw spring-boot:run
 ```
 
-## Информация о сервере:
-1. Используется самоподписанный HTTPS протокол
-2.  Сервер работает на 8443 порту
-3.  Коллекция запросов Postman [Digital Chief.postman_collection.json](Digital%20Chief.postman_collection.json) 
+
 
 ### TODO:
 1. Покрытие тестами
