@@ -47,3 +47,8 @@ mvnw spring-boot:run
 1. Используется самоподписанный HTTPS протокол
 2.  Сервер работает на 8443 порту
 3.  Коллекция запросов Postman [Digital Chief.postman_collection.json](Digital%20Chief.postman_collection.json) 
+
+### TODO:
+1. Покрытие тестами
+2. JWT authentication
+3. dockerfile
