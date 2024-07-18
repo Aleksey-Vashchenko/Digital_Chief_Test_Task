@@ -2,9 +2,9 @@ spring:
   application:
     name: Digital_Chief_Test_Task
   datasource:
-    url: jdbc:postgresql://${DB_SERVER}/${POSTGRES_DB}
-    password: ${POSTGRES_USER}
-    username: ${POSTGRES_PASSWORD}
+    url: ${SPRING_DATASOURCE_URL}
+    password: ${SPRING_DATASOURCE_PASSWORD}
+    username: ${SPRING_DATASOURCE_USERNAME}
 
   jpa:
     show-sql: true
