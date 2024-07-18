@@ -8,6 +8,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Repository;
 
@@ -18,7 +19,7 @@ import java.util.UUID;
 public interface UserRepository<T> extends JpaRepository<User, UUID>, JpaSpecificationExecutor<UserDefaultProjection>{
     User findByEmailIgnoreCase(@Nullable String email);
     Optional<T> findByUsername(String username, Class<T> type);
-    @Query("select u.username as username , u.birthDate as birthDate from User u")
-    Page<UserDefaultProjection> findAll(Specification<UserDefaultProjection> spec, Pageable pageable);
+    @Query("select u.username as username, u.birthDate as birthDate from User u where u.username like :str")
+    Page<UserDefaultProjection> findAllByStr(@Param(value = "str") String str, Pageable pageable);
 
 }

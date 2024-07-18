@@ -4,8 +4,6 @@ import com.vashchenko.project.model.dto.response.ApiResponse;
 import com.vashchenko.project.model.dto.response.projection.user.UserAdvancedProjection;
 import com.vashchenko.project.model.dto.response.projection.user.UserDefaultProjection;
 import com.vashchenko.project.model.entity.User;
-import com.vashchenko.project.model.mapping.UserMapper;
-import com.vashchenko.project.repository.criteria.user.UserCriteria;
 import com.vashchenko.project.service.UserService;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -13,14 +11,10 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.data.domain.Page;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @RestController
 @FieldDefaults(level = AccessLevel.PRIVATE,makeFinal = true)
@@ -58,14 +52,8 @@ public class UserController {
     ResponseEntity<ApiResponse> getUsers(@RequestParam(defaultValue = "0") @Min(0) Integer page,
                                          @RequestParam(defaultValue = "10") @Min(5) @Max(100) Integer size,
                                          @RequestParam(name = "str",defaultValue = "") String str){
-        List<Specification<UserDefaultProjection>> specs = new ArrayList<>();
-        if(!str.isEmpty()){
-            specs.add(UserCriteria.nameContains(str));
-        }
-        Specification<UserDefaultProjection> finalSpec = specs.stream()
-                .reduce(Specification::and)
-                .orElse(null);
-        Page<UserDefaultProjection> users = userService.findUsersByNameContains(page,size,finalSpec);
+        str=str+"%";
+        Page<UserDefaultProjection> users = userService.findUsersByNameContains(page,size,str);
         HttpStatus status = HttpStatus.OK;
         return new ResponseEntity<>(
                 new ApiResponse<>(status,users),

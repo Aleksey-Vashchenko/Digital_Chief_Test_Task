@@ -30,8 +30,8 @@ public class UserService {
         return user.orElseThrow(UserIsNotFoundException::new);
     }
 
-    public <T> Page<T> findUsersByNameContains(int page, int size, Specification<UserDefaultProjection> spec) {
+    public <T> Page<T> findUsersByNameContains(int page, int size, String searchStr) {
         Pageable pageable = PageRequest.of(page, size);
-        return userRepository.findAll(spec,pageable);
+        return userRepository.findAllByStr(searchStr,pageable);
     }
 }
